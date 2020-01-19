@@ -47,16 +47,20 @@ class SceneMain extends Phaser.Scene {
     camera.setBackgroundColor("rgba(240, 125, 255, 1)");
 
     //define our objects
-    this.dracula = this.add.sprite(
-      // game.config.width / 2,
-      // game.config.height / 2,
-      100,
-      game.config.height - 140,
-      "dracula"
-    );
+    // this.dracula = this.add.sprite(
+    //   100,
+    //   game.config.height - 140,
+    //   "dracula"
+    // );
+    this.dracula = this.physics.add.sprite(100, game.config.height - 140, "dracula");
     this.ghost = this.add.sprite(game.config.width, 200, "ghost");
     this.bat = this.add.sprite(game.config.width, 500, "bat");
     this.spider = this.add.sprite(300, 64, "spider");
+
+    this.dracula.setBounce(.1);
+    this.dracula.setCollideWorldBounds(true);
+
+    this.dracula.body.setGravity(100);
 
     var draculaWalk = this.anims.generateFrameNumbers("dracula"); //this generates frames from sprite sheet
     var ghostFly = this.anims.generateFrameNumbers("ghost");
@@ -171,7 +175,7 @@ class SceneMain extends Phaser.Scene {
     }
 
     if (cursors.space.isDown) {
-
+      this.dracula.setVelocityY(-330);
     }
 
     if (cursors.down.isDown) {
@@ -188,12 +192,12 @@ class SceneMain extends Phaser.Scene {
       }
     }
 
-    if (cursors.space.isDown) {
-      this.ghost.alpha -= 0.01;
-      if (this.ghost.alpha <= 0) {
-        this.ghost.alpha = 1;
-      }
-    }
+    // if (cursors.space.isDown) {
+    //   this.ghost.alpha -= 0.01;
+    //   if (this.ghost.alpha <= 0) {
+    //     this.ghost.alpha = 1;
+    //   }
+    // }
 
     //Make bat fly chaotically
     this.bat.x -= 2;
