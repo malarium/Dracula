@@ -35,8 +35,8 @@ class SceneMain extends Phaser.Scene {
 
     //play the sound
     this.music = this.sound.add('music');
-    this.walkSound = this.sound.add('walk');
     this.music.play();
+    this.walkSound = this.sound.add('walk');
 
     //Listen to keys
     window.cursors = this.input.keyboard.createCursorKeys();
@@ -62,6 +62,16 @@ class SceneMain extends Phaser.Scene {
     var ghostFly = this.anims.generateFrameNumbers("ghost");
     var batFly = this.anims.generateFrameNumbers("bat");
     var spiderWalk = this.anims.generateFrameNumbers("spider");
+
+    //add this after all the sprites, tweens and backgrounds have been loaded to scale to the screen
+    const thisXratio = window.innerWidth/1920;
+    const thisYratio = window.innerHeight/1080;
+    this.add.displayList.list.forEach(el => {
+      el.scaleX = thisXratio;
+      el.scaleY = thisYratio;
+    })
+    // this.dracula.body.setGravity(300);
+    console.log(this.dracula)
 
     this.anims.create({
       key: "walk",
@@ -118,6 +128,7 @@ class SceneMain extends Phaser.Scene {
       fontSize: "46px",
       color: "#ff0000"
     });
+
   }
 
   //Function that fires when dracula is clicked
@@ -129,21 +140,38 @@ class SceneMain extends Phaser.Scene {
   }
 
   update() {
+
     if(!this.music.isPlaying) {
       this.music.play();
     }
-    if (cursors.right.isDown) {
+    if (cursors.right.isDown || cursors.left.isDown) {
       if(!this.walkSound.isPlaying) {
         this.walkSound.play();
-      } else {}
-      this.dracula.anims.play("walk", true);
-      this.dracula.x += 3;
-      if (this.dracula.x >= game.config.width) {
-        this.dracula.x = 0;
-      }
+      } 
+      if(cursors.right.isDown) {
+          this.dracula.flipX ? this.dracula.flipX = false : null;
+          this.dracula.anims.play("walk", true);
+          this.dracula.x += 3;
+          if (this.dracula.x >= game.config.width) {
+          this.dracula.x = 0; }
+
+        } else {
+          this.dracula.flipX ? null : this.dracula.flipX = true;
+          this.dracula.anims.play("walk", true);
+          this.dracula.x -= 3;
+          if(this.dracula.x <=0) {
+            this.dracula.x = game.config.width;
+          }
+        }
+      
+      
     } else {
       this.walkSound.stop();
       this.dracula.anims.stop("walk", true);
+    }
+
+    if (cursors.space.isDown) {
+
     }
 
     if (cursors.down.isDown) {

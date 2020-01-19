@@ -6,6 +6,13 @@ window.onload=function()
         width: window.innerWidth,
         height: window.innerHeight,
         parent: 'phaser-game',
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y:300 },
+                debug: false
+            }
+        },
         scene: [SceneMain]
     };
     game = new Phaser.Game(config);
