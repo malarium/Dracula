@@ -3,13 +3,15 @@ window.onload=function()
 {
 	var config = {
         type: Phaser.AUTO,
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: 1333,
+        height: 768,
         parent: 'phaser-game',
         physics: {
             default: 'arcade',
             arcade: {
+                gravity: { y: 1000 },
                 debug: false
+
             }
         },
         scene: [SceneMain]

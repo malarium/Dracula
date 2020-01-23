@@ -14,9 +14,9 @@ class SceneMain extends Phaser.Scene {
     this.load.audio("music", "sounds/music2.mp3");
 
     //load our images
-    this.load.spritesheet("dracula", "images/Drac-2.png", {
-      frameWidth: 128,
-      frameHeight: 128
+    this.load.spritesheet("dracula", "images/DracSlim.png", {
+      frameWidth: 36,
+      frameHeight: 56
     });
   }
 
@@ -25,12 +25,15 @@ class SceneMain extends Phaser.Scene {
     this.add.image(0, 0, "background").setOrigin(0, 0);
 
     const platforms = this.physics.add.staticGroup();
-    platforms.create(100, game.config.height-40, 'floor');
-    platforms.create(50, 250, 'floor');
-    platforms.create(750, 220, 'floor');
-    platforms.create(300, game.config.height-40, 'floor');
-    platforms.create(500, game.config.height-63, 'floor');
-    platforms.create(700, game.config.height-86, 'floor');
+    for (let a=0; a<=1333; a+=200) {
+      platforms.create(a+30, game.config.height-10, 'floor')
+    }
+    // platforms.create(100, game.config.height-40, 'floor');
+    // platforms.create(50, 250, 'floor');
+    // platforms.create(750, 220, 'floor');
+    // platforms.create(300, game.config.height-40, 'floor');
+    // platforms.create(500, game.config.height-63, 'floor');
+    // platforms.create(700, game.config.height-86, 'floor');
 
 
 
@@ -55,7 +58,7 @@ class SceneMain extends Phaser.Scene {
     this.dracula.setCollideWorldBounds(true);
     
     
-    this.dracula.body.setGravityY(1000);
+    // this.dracula.body.setGravityY(1000);
     this.physics.add.collider(this.dracula, platforms);
 
     const draculaWalk = this.anims.generateFrameNumbers("dracula"); //this generates frames from sprite sheet
@@ -92,22 +95,22 @@ class SceneMain extends Phaser.Scene {
           this.dracula.flipX ? this.dracula.flipX = false : null;
           this.dracula.anims.play("walk", true);
           // this.dracula.body.x += 3;
-          this.dracula.setVelocityX(100);
+          this.dracula.setVelocityX(150);
 
         } else {
           this.dracula.flipX ? null : this.dracula.flipX = true;
           this.dracula.anims.play("walk", true);
           // this.dracula.body.x -= 3;
-          this.dracula.setVelocityX(-100);
+          this.dracula.setVelocityX(-150);
         }
     } else {
       this.walkSound.stop();
       this.dracula.anims.stop("walk", true);
       this.dracula.setVelocityX(0);
     }
-
-    if (cursors.space.isDown) {
-      this.dracula.setVelocityY(-330);
+    console.log()
+    if (cursors.space.isDown && this.dracula.body.touching.down) {
+      this.dracula.setVelocityY(-400);
     }
   }
 }
