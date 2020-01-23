@@ -52,7 +52,7 @@ class SceneMain extends Phaser.Scene {
     camera.setBackgroundColor("rgba(240, 125, 255, 1)");
 
     //add sprite and make it available for game physics engine
-    this.dracula = this.physics.add.sprite(0, 0, "dracula");
+    this.dracula = this.physics.add.sprite(0, game.config.height - 80, "dracula");
     this.dracula.setBounce(.1);
     //dracula won't come outside screen
     this.dracula.setCollideWorldBounds(true);

@@ -9,7 +9,7 @@ window.onload=function()
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: { y: 1000 },
+                gravity: { y: 1250 },
                 debug: false
 
             }
